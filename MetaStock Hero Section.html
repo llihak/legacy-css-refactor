@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaStock - Professional Trading Software</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg-dark: #0f1419;
+            --color-bg-darker: #0a0e12;
+            --color-text-primary: #f0f4f8;
+            --color-text-secondary: #b0bcc8;
+            --color-accent-primary: #00d4ff;
+            --color-accent-secondary: #0099ff;
+            --color-accent-gold: #ffa500;
+            --color-success: #00d979;
+            --color-danger: #ff4444;
+            --color-border: #1a2332;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-darker) 0%, var(--color-bg-dark) 100%);
+            color: var(--color-text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0e12 0%, #1a2f4a 50%, #0f1419 100%);
+        }
+
+        /* Animated background elements */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 50%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(0, 153, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 .highlight {
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            color: var(--color-text-primary);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+            color: var(--color-bg-dark);
+            font-weight: bold;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+            color: var(--color-bg-dark);
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-accent-primary);
+            border: 2px solid var(--color-accent-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Right side - visual element */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 47, 74, 0.4);
+            border: 2px solid var(--color-border);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        .chart-signal {
+            padding: 6px 12px;
+            background: rgba(0, 217, 121, 0.2);
+            border-radius: 4px;
+            color: var(--color-success);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Mini chart visualization */
+        .mini-chart {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--color-accent-primary), rgba(0, 212, 255, 0.5));
+            border-radius: 4px 4px 0 0;
+            animation: chartPulse 2s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .chart-bar:nth-child(2) { height: 45%; animation-delay: 0.1s; }
+        .chart-bar:nth-child(3) { height: 65%; animation-delay: 0.2s; }
+        .chart-bar:nth-child(4) { height: 35%; animation-delay: 0.3s; }
+        .chart-bar:nth-child(5) { height: 75%; animation-delay: 0.4s; }
+        .chart-bar:nth-child(6) { height: 55%; animation-delay: 0.5s; }
+        .chart-bar:nth-child(7) { height: 80%; animation-delay: 0.6s; }
+        .chart-bar:nth-child(8) { height: 60%; animation-delay: 0.7s; }
+
+        @keyframes chartPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .chart-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .stat {
+            padding: 12px;
+            background: rgba(0, 153, 255, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-accent-secondary);
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-accent-primary);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Trust badge */
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+        }
+
+        .trust-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--color-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-bg-dark);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 24px;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .hero-visual {
+                height: 350px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .chart-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Left side text -->
+            <div class="hero-text">
+                <h1>
+                    Trade With <span class="highlight">Confidence</span>
+                </h1>
+                <p>
+                    30+ years of proven technical analysis. Real-time signals. Professional-grade tools. Get the edge that thousands of traders rely on.
+                </p>
+
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Reliable buy & sell signals across all markets</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Advanced backtesting & system scanning</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Real-time data from Refinitiv</span>
+                    </div>
+                </div>
+
+                <div class="cta-group">
+                    <button class="btn btn-primary">
+                        Start Trading →
+                    </button>
+                    <button class="btn btn-secondary">
+                        Watch Demo
+                    </button>
+                </div>
+
+                <div class="trust-badge">
+                    <span class="trust-icon">★</span>
+                    <span>Trusted by 30,000+ active traders worldwide</span>
+                </div>
+            </div>
+
+            <!-- Right side visual -->
+            <div class="hero-visual">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Real-time Market Analysis</div>
+                        <div class="chart-signal">BUY SIGNAL</div>
+                    </div>
+                    <div class="mini-chart">
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat">
+                            <div class="stat-value">94.2%</div>
+                            <div class="stat-label">Signal Accuracy</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Real-time</div>
+                            <div class="stat-label">Data Feed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Market Coverage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
